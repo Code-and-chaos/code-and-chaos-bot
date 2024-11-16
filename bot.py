@@ -2,7 +2,10 @@ import discord
 from discord.ext import commands
 
 # Bot setup
-TOKEN = [REDACTED FOR GITHUB]
+with open('token.txt') as f:
+    TOKEN = f.read().strip()
+    if not TOKEN:
+        raise ValueError('Token not found in token.txt')
 intents = discord.Intents.default()
 intents.messages = True
 bot = commands.Bot(command_prefix='.', intents=intents)
