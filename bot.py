@@ -89,20 +89,24 @@ async def info_command(interaction: discord.Interaction):
         inline=False
     )
     embed.add_field(
-        name="Developer:",
-        value="@QuietTerminalInteractive (https://github.com/QuietTerminalInteractive), @Minecrafter8001 (https://github.com/Minecrafter8001)",
+        name="Developers:",
+        value="<@520872721060462592> [Github](https://github.com/QuietTerminalInteractive)\n<@512988669561274400> [Github](https://github.com/Minecrafter8001)",
         inline=False
     )
 
     embed.add_field(
-        name="Total Users:",
+        name="Source code:",
+        value="https://github.com/Code-and-chaos/code-and-chaos-bot",
+        inline=False
+    )
+
+    embed.add_field(
+        name="Total users:",
         value=str(sum(guild.member_count for guild in bot.guilds)),
         inline=True
     )
-    embed.add_field(
-        name="Tip:",
-        value="Use `/help` to see a list of all available commands.",
-        inline=False
+    embed.set_footer(
+        text='Use "/help" to see a list of all available commands.',
     )
 
     await interaction.response.send_message(embed=embed)
