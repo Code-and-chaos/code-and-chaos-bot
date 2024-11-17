@@ -4,6 +4,7 @@ import os
 import discord
 from discord.ext import commands
 start_time = time.strftime('%m-%d-%YdT%H%M%S', time.localtime())
+calculation_start_time = time.time()
 
 # Config
 log_level = logging.INFO
@@ -64,6 +65,45 @@ async def help_command(interaction: discord.Interaction):
             value=command.description if command.description else "No description available.",
             inline=False
         )
+
+    await interaction.response.send_message(embed=embed)
+
+@bot.tree.command(name="info", description="Displays information about the bot.")
+async def info_command(interaction: discord.Interaction):
+    current_time = time.time()
+    uptime = int(current_time - calculation_start_time)
+
+    embed = discord.Embed(
+        title="Bot Information",
+        description="Here is some information about the bot:",
+        color=discord.Color.blue()
+    )
+    embed.add_field(
+        name="Bot Name:",
+        value=bot.user.name,
+        inline=False
+    )
+    embed.add_field(
+        name="Uptime:",
+        value=f"{uptime // 3600} hours { (uptime % 3600) // 60} minutes",
+        inline=False
+    )
+    embed.add_field(
+        name="Developer:",
+        value="@QuietTerminalInteractive (https://github.com/QuietTerminalInteractive), @Minecrafter8001 (https://github.com/Minecrafter8001)",
+        inline=False
+    )
+
+    embed.add_field(
+        name="Total Users:",
+        value=str(sum(guild.member_count for guild in bot.guilds)),
+        inline=True
+    )
+    embed.add_field(
+        name="Tip:",
+        value="Use `/help` to see a list of all available commands.",
+        inline=False
+    )
 
     await interaction.response.send_message(embed=embed)
 
