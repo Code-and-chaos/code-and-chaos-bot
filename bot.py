@@ -38,12 +38,12 @@ bot = commands.Bot(command_prefix='.', intents=intents)
 @bot.event
 async def on_ready():
     logging.info(f'Logged in as {bot.user} and ready to go!')
+    await bot.tree.sync()
 
-@bot.slash_command(pass_context=True)
-async def ping(ctx):
-    logging.info(f'{ctx.user} ran command /ping in {ctx.guild.name}-{ctx.channel.name}')
-    await ctx.response.send_message('Pong')
-
+@bot.tree.command(name="ping", description="Pings the bot.")
+async def ping(interaction: discord.Interaction):
+    logging.info(f'{interaction.user} ran command /ping in {interaction.guild.name}-{interaction.channel.name}')
+    await interaction.response.send_message("Pong")
 
 # Login
 bot.run(TOKEN)
