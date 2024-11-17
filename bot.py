@@ -38,12 +38,34 @@ bot = commands.Bot(command_prefix='.', intents=intents)
 @bot.event
 async def on_ready():
     logging.info(f'Logged in as {bot.user} and ready to go!')
-    await bot.tree.sync()
+
+    try:
+        await bot.tree.sync()
+        logging.info("Slash commands synced successfully!")
+    except Exception as e:
+        logging.error(f"Error syncing commands: {e}")
 
 @bot.tree.command(name="ping", description="Pings the bot.")
 async def ping(interaction: discord.Interaction):
     logging.info(f'{interaction.user} ran command /ping in {interaction.guild.name}-{interaction.channel.name}')
     await interaction.response.send_message("Pong")
+
+@bot.tree.command(name="help", description="Display a list of all available commands.")
+async def help_command(interaction: discord.Interaction):
+    embed = discord.Embed(
+        title="Help - Available Commands",
+        description="Here is a list of all commands you can use:",
+        color=discord.Color.blue()
+    )
+
+    for command in bot.tree.get_commands():
+        embed.add_field(
+            name=f"/{command.name}",
+            value=command.description if command.description else "No description available.",
+            inline=False
+        )
+
+    await interaction.response.send_message(embed=embed)
 
 # Login
 bot.run(TOKEN)
