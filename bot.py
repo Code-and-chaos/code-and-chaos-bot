@@ -1,6 +1,7 @@
 import logging
 import time
 import os
+import json
 import discord
 import importlib.util
 from discord.ext import commands
@@ -12,7 +13,7 @@ log_level = logging.INFO
 
 # Paths
 commands_directory = './commands'
-token_file = './token.txt'
+config_file = './config.json'
 logfilepath = './logs'
 logfile = 'Bot-' + start_time + '.log'
 
@@ -29,11 +30,13 @@ logging.getLogger('').addHandler(console)
 
 
 # Bot setup
-with open(token_file) as f:
-    TOKEN = f.read().strip()
+with open(config_file) as f:
+    token_data = json.load(f)
+    TOKEN = token_data.get('token')
     if not TOKEN:
-        logging.error('Token not found in ' + token_file)
-        raise ValueError('Token not found in ' + token_file)
+        logging.error('Token not found in ' + config_file)
+        raise ValueError('Token not found in ' + config_file)
+
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.', intents=intents)

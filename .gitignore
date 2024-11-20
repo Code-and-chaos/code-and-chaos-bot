@@ -1,6 +1,8 @@
 #bot stuff
-token.txt
-token-main.txt
+token.json
+token-main.json
+config.json
+config-main.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

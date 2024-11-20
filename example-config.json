@@ -1,0 +1,9 @@
+{
+    "token": "token here",
+    "mongoDB": {
+        "host": "connection URL here",
+        "password": "password here", // optional (leave blank if not needed)
+        "user": "username here", // optional (leave blank if not needed)
+        "database": "database here"
+    }
+}
