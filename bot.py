@@ -10,6 +10,7 @@ calculation_start_time = time.time()
 
 # Config
 log_level = logging.INFO
+LOG_CHANNEL_ID = 1091009808901099583
 
 # Paths
 commands_directory = './commands'
@@ -41,18 +42,6 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.', intents=intents)
 
-@bot.event
-async def on_ready():
-    logging.info(f'Logged in as {bot.user} and ready to go!')
-    try:
-        await load_commands()
-        await bot.tree.sync()
-        logging.info("Slash commands synced successfully!")
-    except Exception as e:
-        logging.error(f"Error syncing commands: {e}")
-
-
-
 
 async def load_commands():
     for filename in os.listdir(commands_directory):
@@ -67,10 +56,23 @@ async def load_commands():
             spec.loader.exec_module(module)
 
             if hasattr(module, 'setup'):
-                module.setup(bot, logging)
+                module.setup(bot, logging, LOG_CHANNEL_ID)
                 logging.info(f"Successfully set up module: {module_name}")
             else:
                 logging.warning(f"No setup function found in module: {module_name}")
+
+
+
+
+@bot.event
+async def on_ready():
+    logging.info(f'Logged in as {bot.user} and ready to go!')
+    try:
+        await load_commands()
+        await bot.tree.sync()
+        logging.info("Slash commands synced successfully!")
+    except Exception as e:
+        logging.error(f"Error syncing commands: {e}")
 
 @bot.event
 async def on_interaction(interaction: discord.Interaction):

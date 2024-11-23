@@ -2,7 +2,7 @@ import discord
 import time
 calculation_start_time = time.time()
 
-def setup(bot, logging):
+def setup(bot, logging, audit_log_channel_id):
     @bot.tree.command(name="info", description="Displays information about the bot.")
     async def info_command(interaction: discord.Interaction):
         current_time = time.time()

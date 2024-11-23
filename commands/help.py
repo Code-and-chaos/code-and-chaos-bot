@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-def setup(bot, logging):
+def setup(bot, logging, audit_log_channel_id):
     @bot.tree.command(name="help", description="Display a list of all available commands.")
     async def help_command(interaction: discord.Interaction):
         embed = discord.Embed(
