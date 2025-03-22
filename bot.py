@@ -10,7 +10,7 @@ calculation_start_time = time.time()
 
 # Config
 log_level = logging.INFO
-LOG_CHANNEL_ID = 1091009808901099583
+LOG_CHANNEL_ID = 0
 
 # Paths
 commands_directory = './commands'
